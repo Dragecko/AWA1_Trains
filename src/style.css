@@ -1,0 +1,1 @@
+body{font-family:system-ui;background:#112137;color:#eff5ff;margin:0}main{max-width:900px;margin:30px auto;padding:20px}.card{background:#28486b;border-radius:12px;padding:16px;margin:15px 0;transition:transform .25s}.card:hover{transform:translateX(8px)}@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
