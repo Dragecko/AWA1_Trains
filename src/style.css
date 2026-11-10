@@ -13,21 +13,73 @@ body {
 }
 
 main {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 30px auto;
   padding: 20px;
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
+  /* Grille interne : texte | image | numéro */
+  display: grid;
+  grid-template-columns: 1fr 1.7fr .65fr;
+  align-items: center;
+  min-height: 350px;
+  padding: 40px;
   margin: 15px 0;
-  transition: transform .25s;
+  background: #eee;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: background .5s;
+}
+
+.card-info small {
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  color: #888;
+}
+
+.card-info h2 {
+  font-size: 48px;
+  letter-spacing: -2px;
+  margin: 15px 0;
+}
+
+.card-info p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #777;
+}
+
+.card-image {
+  width: 100%;
+  height: 290px;
+  object-fit: contain;
+  transition: transform .8s;
+}
+
+.card-number {
+  justify-self: end;
+  font-size: 36px;
+  font-weight: 400;
+  color: #aaa;
+}
+
+@media (max-width: 700px) {
+  .card {
+    grid-template-columns: 1fr;
+    padding: 25px;
+  }
+  .card-image {
+    height: 180px;
+  }
 }
 
 .card:hover {
-  transform: translateY(-4px) scale(1.02);
+  background: #e6e6e5;   
+}
+
+.card:hover .card-image {
+  transform: translateX(-10px) scale(1.03);
 }
 
 @media (prefers-reduced-motion: reduce) {
