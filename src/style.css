@@ -74,12 +74,18 @@ main {
   }
 }
 
-.card:hover {
-  background: #e6e6e5;   
+.card:hover,
+.card:focus-visible {
+  background: #e6e6e5;
 }
 
-.card:hover .card-image {
+.card:hover .card-image,
+.card:focus-visible .card-image {
   transform: translateX(-10px) scale(1.03);
+}
+
+.card:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

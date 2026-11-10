@@ -26,8 +26,7 @@ onMounted(async () => {
     <p v-if="loading">Chargement…</p>
     <p v-if="error" role="alert">{{ error }}</p>
 
-    <!-- Une carte par train : texte | image | numéro -->
-    <section v-for="item in items" :key="item.id" class="card">
+    <section v-for="item in items" :key="item.id" class="card" tabindex="0">
       <div class="card-info">
         <small>{{ item.code }}</small>
         <h2>{{ item.name }}</h2>
