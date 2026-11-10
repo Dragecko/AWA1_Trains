@@ -1,7 +1,14 @@
+/* Base styles colors scheme*/
+:root {
+  --red: #eb0000;
+  --ink: #181818;
+  --paper: #f5f4f1;
+}
+
 body {
-  font-family: system-ui;
-  background: #112137;
-  color: #eff5ff;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
   margin: 0;
 }
 
@@ -12,7 +19,7 @@ main {
 }
 
 .card {
-  background: #28486b;
+  background: white;
   border-radius: 12px;
   padding: 16px;
   margin: 15px 0;
