@@ -1,8 +1,24 @@
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  width: { type: Number, default: 160 },
+  compact: { type: Boolean, default: false }
+});
+
+const viewBox = computed(() =>
+  props.compact
+    ? '240 457.687 122.573 73.158'
+    : '142.24 457.687 220.333 73.158'
+);
+</script>
+
 <template>
 
   <svg
     class="logo"
-    viewBox="142.24 457.687 220.333 73.158"
+    :viewBox="viewBox"
+    :style="{ width: width + 'px' }"
     role="img"
     aria-label="Logo CFF"
   >
@@ -16,7 +32,6 @@
 
 <style scoped>
 .logo {
-  width: 160px;   
   display: block;
 }
 
@@ -26,5 +41,18 @@
 
 .logo-emblem {
   fill: white;
+  animation: arrive 1s ease-out;   /* joue une fois au chargement */
+}
+
+/* L'emblème entre depuis la gauche, comme un train qui arrive en gare */
+@keyframes arrive {
+  from {
+    transform: translateX(-120px);  /* hors du carré, à gauche (unités de la viewBox) */
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);       /* à sa place */
+    opacity: 1;
+  }
 }
 </style>
