@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import LogoCff from './components/LogoCff.vue';
 
 const items = ref([]);
 const loading = ref(true);
@@ -55,6 +56,7 @@ function back() {
 
 <template>
   <main>
+    <LogoCff />
     <!-- VUE LISTE -->
     <template v-if="!current">
       <h1>AWA1 — Projet individuel</h1>
