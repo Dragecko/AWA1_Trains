@@ -5,6 +5,10 @@
   --paper: #f5f4f1;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: var(--paper);
@@ -12,10 +16,76 @@ body {
   margin: 0;
 }
 
-main {
-  max-width: 1100px;
-  margin: 30px auto;
-  padding: 20px;
+/* En-tête : posé par-dessus le haut de la page */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4.5%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+
+.brand-sub {
+  padding-left: 16px;
+  border-left: 1px solid #ddd;
+  font-size: 9px;
+  line-height: 1.5;
+  letter-spacing: 2px;
+}
+
+.nav-end {
+  display: flex;
+  gap: 30px;
+  font-size: 9px;
+}
+
+/* La collection, sous la page d'arrivée */
+.collection {
+  padding: 95px 5%;
+}
+
+.collection-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 50px;
+  margin-bottom: 40px;
+}
+
+.collection-intro h2 {
+  margin: 0;
+  font-size: clamp(48px, 6vw, 95px);
+  font-weight: 600;
+  letter-spacing: -4px;
+  line-height: 1;
+}
+
+.collection-intro h2 span {
+  color: var(--red);
+}
+
+.collection-intro p {
+  max-width: 290px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: #777;
 }
 
 .card {
@@ -65,6 +135,16 @@ main {
   color: #aaa;
 }
 
+@media (max-width: 800px) {
+  .brand-sub,
+  .nav-end {
+    display: none;
+  }
+  .collection-intro {
+    display: block;
+  }
+}
+
 @media (max-width: 700px) {
   .card {
     grid-template-columns: 1fr;
@@ -90,6 +170,12 @@ main {
 }
 
 /* Vue détail d'un train */
+.detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 130px 20px 60px;
+}
+
 .detail small {
   font-size: 9px;
   letter-spacing: 1.6px;

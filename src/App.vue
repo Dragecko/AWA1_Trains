@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import LogoCff from './components/LogoCff.vue';
+import HomeHero from './components/HomeHero.vue';
 
 const items = ref([]);
 const loading = ref(true);
@@ -55,32 +56,51 @@ function back() {
 </script>
 
 <template>
+  <header class="site-header">
+    <div class="brand">
+      <LogoCff :width="108" />
+      <strong class="brand-name">CFF</strong>
+      <span class="brand-sub">LA COLLECTION<br>FERROVIAIRE</span>
+    </div>
+    <div class="nav-end">
+      <span>FR</span>
+      <span>SUISSE · 46° N</span>
+    </div>
+  </header>
+
   <main>
-    <LogoCff />
     <!-- VUE LISTE -->
     <template v-if="!current">
-      <h1>AWA1 — Projet individuel</h1>
-      <p>Une source de données Node.js affichée par Vue.js.</p>
+      <!-- Page d'arrivée (composant) -->
+      <HomeHero />
 
-      <p v-if="loading">Chargement…</p>
-      <p v-if="error" role="alert">{{ error }}</p>
-
-      <!-- clic open the detail page for da train -->
-      <section
-        v-for="item in items"
-        :key="item.id"
-        class="card"
-        tabindex="0"
-        @click="open(item)"
-        @keydown.enter="open(item)"
-      >
-        <div class="card-info">
-          <small>{{ item.code }}</small>
-          <h2>{{ item.name }}</h2>
-          <p>{{ item.description }}</p>
+      <!-- La collection -->
+      <section id="flotte" class="collection">
+        <div class="collection-intro">
+          <h2>Trois signatures.<br><span>Une collection.</span></h2>
+          <p>Découvrez le caractère et la conception de chaque modèle.</p>
         </div>
-        <img class="card-image" :src="item.image" :alt="'Visualisation du ' + item.name">
-        <strong class="card-number">0{{ item.id }}</strong>
+
+        <p v-if="loading">Chargement…</p>
+        <p v-if="error" role="alert">{{ error }}</p>
+
+        <!-- clic open the detail page for da train -->
+        <section
+          v-for="item in items"
+          :key="item.id"
+          class="card"
+          tabindex="0"
+          @click="open(item)"
+          @keydown.enter="open(item)"
+        >
+          <div class="card-info">
+            <small>{{ item.code }}</small>
+            <h2>{{ item.name }}</h2>
+            <p>{{ item.description }}</p>
+          </div>
+          <img class="card-image" :src="item.image" :alt="'Visualisation du ' + item.name">
+          <strong class="card-number">0{{ item.id }}</strong>
+        </section>
       </section>
     </template>
 
