@@ -1,0 +1,137 @@
+/* Styles de la page d'arrivée (HomeHero.vue) */
+
+/* Toute la page d'arrivée : les éléments sont placés en % de cette zone */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 720px;
+  overflow: hidden;
+}
+
+.hero-topline {
+  position: absolute;
+  top: 130px;
+  left: 4.5%;
+  right: 4.5%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid #0002;
+  font-size: 8px;
+  letter-spacing: 1.8px;
+  color: #878787;
+}
+
+/* Mot géant rouge */
+.hero-word {
+  position: absolute;
+  top: 20%;
+  left: 28%;
+  font-size: clamp(120px, 17.5vw, 300px);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1;
+  color: var(--red);
+  animation: word-in 1.3s both;
+}
+
+/* Le train */
+.hero-stage {
+  position: absolute;
+  top: 28%;
+  bottom: 12%;
+  left: 24%;
+  right: 13%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-train {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 16px #353a3f16);
+  animation: train-in 1.8s cubic-bezier(.18, .7, .2, 1) both;
+}
+
+.stage-shadow {
+  position: absolute;
+  bottom: 15%;
+  left: 12%;
+  width: 75%;
+  height: 8%;
+  border-radius: 50%;
+  background: #70777b26;
+  filter: blur(25px);
+  transform: rotate(-10deg);
+}
+
+.render-note {
+  position: absolute;
+  bottom: 8%;
+  left: 40%;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+  color: #999;
+}
+
+/* Barre du bas */
+.hero-bottom {
+  position: absolute;
+  bottom: 33px;
+  left: 4.5%;
+  right: 4.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 25px;
+  border-top: 1px solid #0002;
+}
+
+.edition {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.edition > span {
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: -2px;
+  color: var(--red);
+}
+
+.edition > div {
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 1.5px;
+}
+
+.edition small {
+  font-size: 9px;
+  letter-spacing: 0;
+  color: #999;
+}
+
+/* Arrivée du mot et du train au chargement */
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(35px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes train-in {
+  from { opacity: 0; transform: translate(70px, 20px) scale(.92); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  .hero { min-height: 700px; }
+  .hero-topline { top: 96px; }
+  .hero-topline span:last-child { display: none; }
+  .hero-word { top: 19%; left: 5%; font-size: 23vw; }
+  .hero-stage { top: 22%; bottom: 25%; left: -3%; right: -3%; }
+  .hero-bottom { left: 6%; right: 6%; }
+}
