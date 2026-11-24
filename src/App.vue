@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { gsap } from 'gsap';
 import LogoCff from './components/LogoCff.vue';
 import HomeHero from './components/HomeHero.vue';
 
@@ -7,6 +8,7 @@ const items = ref([]);
 const loading = ref(true);
 const error = ref('');
 const current = ref(null); 
+const train = ref(null);
 
 onMounted(async () => {
   try {
@@ -39,7 +41,7 @@ function changeView(next) {
   setTimeout(() => { curtain.value = false; }, HALF * 2);
 }
 
-// Ouvre la fiche d'un train
+// Opens a train's detail view
 function open(item) {
   changeView(() => {
     current.value = item;
@@ -47,7 +49,18 @@ function open(item) {
   });
 }
 
-// Revient à la liste
+// Drives the train into the detail view (GSAP tween)
+function play() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  gsap.fromTo(
+    train.value,
+    { xPercent: 40, y: -90, scale: 0.35, opacity: 0 },
+    { xPercent: 0, y: 0, scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' }
+  );
+}
+
+// Goes back to the list
 function back() {
   changeView(() => {
     current.value = null;
@@ -69,12 +82,12 @@ function back() {
   </header>
 
   <main>
-    <!-- VUE LISTE -->
+    <!-- LIST VIEW -->
     <template v-if="!current">
-      <!-- Page d'arrivée (composant) -->
+      <!-- Landing page (component) -->
       <HomeHero />
 
-      <!-- La collection -->
+      <!-- The collection -->
       <section id="flotte" class="collection">
         <div class="collection-intro">
           <h2>Trois signatures.<br><span>Une collection.</span></h2>
@@ -109,7 +122,8 @@ function back() {
       <button type="button" class="back" @click="back">← La collection</button>
       <small>{{ current.code }}</small>
       <h1>{{ current.name }}</h1>
-      <img class="detail-image" :src="current.image" :alt="'Visualisation du ' + current.name">
+      <img ref="train" class="detail-image" :src="current.image" :alt="'Visualisation du ' + current.name">
+      <button type="button" class="play" @click="play">▶ Faire rouler</button>
       <p>{{ current.description }}</p>
     </section>
   </main>
