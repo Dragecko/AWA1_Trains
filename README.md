@@ -127,6 +127,57 @@ La `viewBox` fixe le **repère de coordonnées** du dessin : `x y largeur hauteu
 
 ---
 
+## S4 — Tween GSAP
+
+### Le tween
+
+Dans la fiche d'un train, le bouton **« ▶ Faire rouler »** fait arriver le train du fond de l'image : il suit l'angle de la photo, petit et loin au bord droit de l'image, puis grandit jusqu'à sa place, comme s'il roulait vers nous.
+
+```js
+const train = ref(null);   // relié à <img ref="train"> dans le template
+
+function play() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  gsap.fromTo(
+    train.value,
+    { xPercent: 40, y: -90, scale: 0.35, opacity: 0 },
+    { xPercent: 0, y: 0, scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' }
+  );
+}
+```
+
+### Chaque paramètre
+
+| Paramètre | Rôle |
+|---|---|
+| `gsap.fromTo()` | Impose le départ **et** l'arrivée : le tween se rejoue à chaque clic (avec `gsap.to()`, un 2e clic ne ferait rien, le train étant déjà arrivé) |
+| `train.value` | La cible : l'image du train, récupérée avec un `ref` Vue (pas de `querySelector`) |
+| `{ xPercent: 40, y: -90, scale: 0.35, opacity: 0 }` | Départ : au bord droit de l'image (`xPercent: 40` = 40 % de la largeur de l'image, quelle que soit la taille de l'écran), un peu plus haut, petit (35 %), invisible |
+| `xPercent: 0, y: 0, scale: 1, opacity: 1` | Arrivée : à sa place, taille normale, visible |
+| `duration: 1.4` | Durée en secondes (en GSAP 3, la durée est une propriété, plus le 2e argument) |
+| `ease: 'power2.out'` | Rapide au départ, freine à l'arrivée, comme un train qui entre en gare |
+
+- **Déclencheur :** clic sur le bouton (`@click="play"`), ou touche Entrée / Espace au clavier puisque c'est un `<button>`.
+- **Propriétés animées :** `transform` (via `xPercent`, `y`, `scale`) et `opacity`, qui ne recalculent pas la mise en page.
+- **Clics répétés :** chaque clic relance le tween depuis le départ imposé, sans bug.
+- **Reduced motion :** si « réduire les animations » est activé, le train reste à sa place.
+
+### Pourquoi GSAP plutôt que CSS ici ?
+
+Le mouvement est **décidé par le code**, au moment du clic, et doit pouvoir être **rejoué à chaque clic**. En CSS, il faudrait retirer puis remettre une classe (comme pour le rideau du S2), ce qui est plus fragile. Avec GSAP, un seul appel `fromTo()` suffit. Pour un simple survol, le CSS reste le bon choix (S2).
+
+### Test
+
+| Étape | Résultat attendu | OK |
+|---|---|---|
+| Ouvrir une fiche, cliquer « ▶ Faire rouler » | Le train arrive du fond en grandissant et freine à sa place | ☐ |
+| Cliquer plusieurs fois rapidement | Le tween repart du début, sans bug | ☐ |
+| `Tab` jusqu'au bouton, puis `Entrée` | Même effet qu'au clic | ☐ |
+| « Réduire les animations » activé | Le train ne bouge pas | ☐ |
+
+---
+
 ## Journal des changements
 
 - **S2**
@@ -143,6 +194,10 @@ La `viewBox` fixe le **repère de coordonnées** du dessin : `x y largeur hauteu
   - Page d'arrivée `HomeHero.vue` (mot « GIRUNO », train, barre du bas) avec son CSS dans `HomeHero.css`.
   - En-tête avec le logo, section « Trois signatures. Une collection. ».
 
+- **S4**
+  - Installation de GSAP (`npm install gsap`).
+  - Bouton « ▶ Faire rouler » dans la fiche : tween `gsap.fromTo()` sur l'image du train, ciblée par un `ref`.
+
 ## Sources et usages d'IA
 
 - Maquette « CFF Collection » (code et images) générée avec ChatGPT.
@@ -151,3 +206,5 @@ La `viewBox` fixe le **repère de coordonnées** du dessin : `x y largeur hauteu
 - Logo : reproduction du logo SBB CFF FFS (marque des Chemins de fer fédéraux suisses), redessinée à la main en SVG. Projet de cours, non affilié aux CFF.
 - Exercices du cours : 03-svg, 04-svg-animation, 08-svg-vue.
 - Claude (Anthropic) : aide pour le jalon S3 (nettoyage du SVG, composant Vue, animation, page d'arrivée, README).
+- Exercices du cours : 05-gsap-tween, 09-gsap-vue. Bibliothèque GSAP 3 (gsap.com).
+- Claude (Anthropic) : aide pour le jalon S4 (tween, README).
